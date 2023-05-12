@@ -27,8 +27,7 @@ if (isset($_GET['page'])) {
     } elseif ($page == 'updateSubCategory') {
         require_once('../controllers/subCategory.php');
         vueUpdateSubCategory($_GET['id']);
-    } 
-    elseif ($page == 'nosServices') {
+    } elseif ($page == 'nosServices') {
         require_once('../controllers/services.php');
         vueServices();
     } elseif ($page == 'adServices') {

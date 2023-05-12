@@ -57,10 +57,10 @@
                     <label for="formFileMultiple" class="form-label">Choix des photos</label>
                     <input class="form-control" type="file" id="formFileMultiple" name="pictures[]" multiple>
                 </div>
-               
+
                 <div class="mb-3">
                     <label for="enable" class="form-label">Active</label>
-                    <select name="enable" id=""class="form-select">
+                    <select name="enable" id="" class="form-select">
                         <option value="1">Oui</option>
                         <option value="0">Non</option>
                     </select>

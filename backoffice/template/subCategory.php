@@ -13,7 +13,7 @@
                 </thead>
                 <tbody>
                     <div class="ajouter">
-                        <a href="index.php?page=adSubCategory&id=<?php echo $_GET['id'];?>"> <button class="btn btn-primary" type="submit"> Ajouter</button></a>
+                        <a href="index.php?page=adSubCategory&id=<?php echo $_GET['id']; ?>"> <button class="btn btn-primary" type="submit"> Ajouter</button></a>
                     </div>
                     <?php
                     foreach ($subCategorys as $subCategory) {
@@ -28,13 +28,14 @@
                                 ?></td>
 
                             <td class="action">
-                                <a href="index.php?page=updateSubCategory&id=<?php echo $subCategory['id'] ?>&id_gamme=<?php echo $_GET['id'];?>"> <button class="btn btn-primary" type="submit"> Modifier</button></a>
+                                <a href="index.php?page=updateSubCategory&id=<?php echo $subCategory['id'] ?>&id_gamme=<?php echo $_GET['id']; ?>"> <button class="btn btn-primary" type="submit"> Modifier</button></a>
                             </td>
                             <td class="action">
                                 <form action="../model/deleteSubCategory.php" method="POST">
-                                    <input type="hidden" name='id' value="<?php echo $subCategory['id']; ?>"> 
-                                    <input type="hidden" name='id_gamme' value="<?php echo $_GET['id']; ?>"> 
-                                    <button class="btn btn-danger" type="submit" onclick="return(confirm('Voulez-vous supprimer cette entrée ?'));"> Supprimer</button> </form>
+                                    <input type="hidden" name='id' value="<?php echo $subCategory['id']; ?>">
+                                    <input type="hidden" name='id_gamme' value="<?php echo $_GET['id']; ?>">
+                                    <button class="btn btn-danger" type="submit" onclick="return(confirm('Voulez-vous supprimer cette entrée ?'));"> Supprimer</button>
+                                </form>
                             </td>
                         </tr>
                     <?php

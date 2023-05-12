@@ -8,7 +8,7 @@ function adSubCategory()
 
     $db = dbconnect();
     $name = secureInput($_POST['name']);
-    $id=secureInput($_POST['id']);
+    $id = secureInput($_POST['id']);
     $is_enable = secureInput($_POST['enable']);
     $query = 'INSERT INTO `subcategory`( `name`, `is_enable`, `id_gamme_products`) VALUES (:name,:is_enable,:id_gamme_products)';
     $req = $db->prepare($query);
@@ -16,5 +16,4 @@ function adSubCategory()
     $req->bindValue(':is_enable', $is_enable, PDO::PARAM_INT);
     $req->bindValue(':id_gamme_products', $id, PDO::PARAM_INT);
     $req->execute();
-   
 }
