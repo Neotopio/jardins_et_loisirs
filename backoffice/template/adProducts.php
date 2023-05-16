@@ -49,7 +49,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="definition" class="form-label">Choisir la sous-catégorie</label>
-                    <select class="form-select" aria-label="Default select example" id="sc" name="sousCategories">
+                    <select class="form-select" aria-label="Default select example" id="sc" name="subcategory">
 
                     </select>
                 </div>

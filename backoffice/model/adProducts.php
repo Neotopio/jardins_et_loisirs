@@ -11,17 +11,24 @@ function adProduct()
     $price=secureInput($_POST['price']);
     $name=secureInput($_POST['name']);
     $description=secureInput($_POST['description']);
+    $characteristic_1=secureInput($_POST['characteristic_1']);
+    $characteristic_2=secureInput($_POST['characteristic_2']);
+    $characteristic_3=secureInput($_POST['characteristic_3']);
     $enable=secureInput($_POST['enable']);
-    $gamme=secureInput($_POST['gamme']);
+    $subcategory=secureInput($_POST['subcategory']);
     $ref=secureInput($_POST['ref']);
-    $query = 'INSERT INTO product(ident_time,price,name,description,is_enable,id_gamme_products,reference) VALUES (:ident_time,:price,:name,:description,:is_enable,:id_gamme_products,:reference)';
+    $query = 'INSERT INTO product(ident_time,price,name,description,characteristic_1,characteristic_2,characteristic_3,is_enable,id_subcategory,reference) 
+                VALUES (:ident_time,:price,:name,:description,:characteristic_1,:characteristic_2,:characteristic_3,:is_enable,:id_subcategory,:reference)';
     $req = $db->prepare($query);
     $req->bindValue(':ident_time', $ident_time, PDO::PARAM_INT);
     $req->bindValue(':price', $price,);
     $req->bindValue(':name', $name, PDO::PARAM_STR);
     $req->bindValue(':description', $description, PDO::PARAM_STR);
+    $req->bindValue(':characteristic_1', $characteristic_1, PDO::PARAM_STR);
+    $req->bindValue(':characteristic_2', $characteristic_2, PDO::PARAM_STR);
+    $req->bindValue(':characteristic_3', $characteristic_3, PDO::PARAM_STR);
     $req->bindValue(':is_enable', $enable, PDO::PARAM_INT);
-    $req->bindValue(':id_gamme_products', $gamme, PDO::PARAM_INT);
+    $req->bindValue(':id_subcategory', $subcategory, PDO::PARAM_INT);
     $req->bindValue(':reference', $ref, PDO::PARAM_STR);
     $req->execute();
 }
