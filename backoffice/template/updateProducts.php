@@ -3,7 +3,7 @@
 <div class="container ">
     <div class="row">
         <section class="col-12">
-            <h1>MISE A JOUR DU PRODUIT</h1>
+            <h1>Mise a jour du produit</h1>
             <form action="../controllers/dbUpdateProducts.php" method="POST" class="row my-5" enctype="multipart/form-data">
                 <?php foreach ($products as $product) {
                 ?>

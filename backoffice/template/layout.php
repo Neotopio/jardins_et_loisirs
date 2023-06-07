@@ -26,10 +26,13 @@
         <nav class="nav">
             <div> <a href="index.php?page=home" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">Home</span> </a>
                 <div class="nav_list">
-                    <a href="index.php?page=nosGammesProduits" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Nos gammes produits</span> </a>
+                <a href="index.php?page=carousel" class="nav_link "> <i class="bi bi-caret-left"></i> <span class="nav_name">Caroussel</span> </a>
+                    
+                    <a href="index.php?page=nosGammesProduits" class="nav_link "> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Nos gammes produits</span> </a>
                     <a href="index.php?page=nosServices" class="nav_link"> <i class='bx bxs-grid-alt nav_icon'></i> <span class="nav_name">Nos services</span> </a>
                     <a href="index.php?page=news" class="nav_link"> <i class="bi bi-newspaper"></i> <span class="nav_name">Actualités</span> </a>
                     <a href="index.php?page=products" class="nav_link"> <i class='bx bxs-shopping-bags nav_icon'></i> <span class="nav_name">Produits</span> </a>
+                    <a href="index.php?page=bike" class="nav_link"> <i class="bi bi-bicycle"></i> <span class="nav_name">Vélos</span> </a>
                     <a href="index.php?page=location" class="nav_link"> <i class="bi bi-calendar3"></i> <span class="nav_name">Location</span> </a>
                     <a href="../template/adAdmin.php" class="nav_link"> <i class="bi bi-people"></i> <span class="nav_name">Gestion admin</span> </a>
                 </div>

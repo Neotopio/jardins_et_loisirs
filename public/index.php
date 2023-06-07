@@ -1,22 +1,27 @@
 <?php
-
+session_start();
 if (isset($_GET['action'])) {
     $action = strval($_GET['action']);
     if ($action == 'gamme product') {
         require_once('../controllers/gamme_product');
-       // gamme_product();
+        gamme_product();
     } elseif ($action == 'services') {
-        siervice();
+        require_once('../controllers/services.php');
+        service();
     }elseif ($action == 'news') {
+        require_once('../controllers/news.php');
         news();
-    }  elseif ($action == 'contact') {
-        require_once('../contollers/contact.php');
+    }  elseif ($action == 'location') {
+        require_once('../controllers/location.php');
+        location();
+    }elseif ($action == 'contact') {
+        require_once('../controllers/contact.php');
         contact();
     }else {
-        require_once('../contollers/home.php');
+        require_once('../controllers/home.php');
         home();
     }
 } else {
-    require_once('../contollers/home.php');
+    require_once('../controllers/home.php');
     home();
 }

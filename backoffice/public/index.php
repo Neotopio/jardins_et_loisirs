@@ -54,7 +54,26 @@ if (isset($_GET['page'])) {
     } elseif ($page == 'updateProducts') {
         require_once('../controllers/updateProducts.php');
         vueUpdateProducts($_GET['id']);
-    } elseif ($page == 'location') {;
+    } elseif ($page == 'carousel') {
+        require_once('../controllers/carousel.php');
+        vueCarousel();
+    } elseif ($page == 'adCarousel') {
+        require_once('../controllers/adCarousel.php');
+        vueAdCarousel();
+    } elseif ($page == 'updateCarousel') {
+        require_once('../controllers/carousel.php');
+        vueUpdateCarousel($_GET['id']);
+    }elseif ($page == 'bike') {
+        require_once('../controllers/bike.php');
+        vueBike();
+    } elseif ($page == 'adBike') {
+        require_once('../controllers/adBike.php');
+        vueAdBike();
+    } elseif ($page == 'updateBike') {
+        require_once('../controllers/bike.php');
+        vueUpdateBike($_GET['id']);
+    }
+    elseif ($page == 'location') {;
     } else {
         require_once('../controllers/homePage.php');
         homePage();

@@ -1,4 +1,11 @@
-<?php ob_start(); ?>
+<?php ob_start(); 
+if (isset($_SESSION['sucess'])) {
+    echo "<div class='alert alert-success'>" . $_SESSION['sucess'] . "</div>";
+    unset($_SESSION['sucess']);
+} elseif (isset($_SESSION['error'])) {
+    echo "<div class='alert alert-warning'>" . $_SESSION['error'] . "</div>";
+    unset($_SESSION['error']);
+}?>
 <div class="container  mb-5">
     <h1 class="title mb-5 mt-5">Contact</h1>
     <div class="row  cadre">
@@ -7,23 +14,23 @@
 
                 <div>
                     <label for="exampleFormControlInput1" class="form-label">Nom</label>
-                    <input type="text" class="form-control button " placeholder="" aria-label="Last name" name="last_name">
+                    <input type="text" class="form-control button " placeholder="" aria-label="Last name" name="last_name" required >
                 </div>
                 <div>
                     <label for="exampleFormControlInput1" class="form-label">Prénom</label>
-                    <input type="text" class="form-control button" placeholder="" aria-label="First name" name="first_name">
+                    <input type="text" class="form-control button" placeholder="" aria-label="First name" name="first_name"required>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Téléphone</label>
-                    <input type="number" class="form-control button" name="tel">
+                    <input type="number" class="form-control button" name="tel"required>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Adresse Email</label>
-                    <input type="email" class="form-control button"  placeholder="name@example.com" name="mail">
+                    <input type="email" class="form-control button"  placeholder="name@example.com" name="mail"required>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Message</label>
-                    <textarea class="form-control button"  rows="8" name="text"></textarea>
+                    <textarea class="form-control button"  rows="8" name="text"required></textarea>
                 </div>
                 <button class="btn btn-outline-dark button" type="submit">Envoyer</button>
             </form>
