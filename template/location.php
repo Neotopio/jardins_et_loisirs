@@ -29,89 +29,88 @@ if (isset($_SESSION['sucess'])) {
         // ...
     };
     $(function() {
-    // Initialiser le date range picker
-    $('#daterange').daterangepicker({
-        minDate: new Date(),
-        opens: 'center',
-        drops: 'up',
-        locale: {
-            format: 'DD/MM/YYYY',
-            separator: ' - ',
-            applyLabel: 'Valider',
-            cancelLabel: 'Annuler',
-            fromLabel: 'De',
-            toLabel: 'À',
-            customRangeLabel: 'Personnalisé',
-            daysOfWeek: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
-            monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-            firstDay: 1
-        },
-        isInvalidDate: function(date) {
+        // Initialiser le date range picker
+        $('#daterange').daterangepicker({
+            minDate: new Date(),
+            opens: 'center',
+            drops: 'up',
+            locale: {
+                format: 'DD/MM/YYYY',
+                separator: ' - ',
+                applyLabel: 'Valider',
+                cancelLabel: 'Annuler',
+                fromLabel: 'De',
+                toLabel: 'À',
+                customRangeLabel: 'Personnalisé',
+                daysOfWeek: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                firstDay: 1
+            },
+            isInvalidDate: function(date) {
+                var bikeId = 1;
+                var selectedDates = bookingDates[bikeId];
+                if (!selectedDates) {
+                    return false;
+                }
+                for (var i = 0; i < selectedDates.length; i++) {
+                    var startDate = moment(selectedDates[i].start);
+                    var endDate = moment(selectedDates[i].end);
+                    if (date.isSameOrAfter(startDate) && date.isSameOrBefore(endDate)) {
+                        return true; // Date déjà prise, invalide
+                    }
+                }
+                return false;
+            },
+        });
+
+        // Ajouter l'événement apply.daterangepicker
+        $('#daterange').on('apply.daterangepicker', function(ev, picker) {
+            var startDate = picker.startDate;
+            var endDate = picker.endDate;
+
+            // Bloquer la sélection de lundi et dimanche comme premier et dernier jour
+            if (startDate.day() === 0 || startDate.day() === 1) {
+                alert("Veuillez sélectionner un autre jour que lundi ou dimanche comme premier jour.");
+                return false;
+            }
+
+            if (endDate.day() === 0 || endDate.day() === 1) {
+                alert("Veuillez sélectionner un autre jour que lundi ou dimanche comme dernier jour.");
+                return false;
+            }
+
             var bikeId = 1;
             var selectedDates = bookingDates[bikeId];
             if (!selectedDates) {
-                return false;
-            }
-            for (var i = 0; i < selectedDates.length; i++) {
-                var startDate = moment(selectedDates[i].start);
-                var endDate = moment(selectedDates[i].end);
-                if (date.isSameOrAfter(startDate) && date.isSameOrBefore(endDate)) {
-                    return true; // Date déjà prise, invalide
-                }
-            }
-            return false;
-        },
-    });
-
-    // Ajouter l'événement apply.daterangepicker
-    $('#daterange').on('apply.daterangepicker', function(ev, picker) {
-        var startDate = picker.startDate;
-        var endDate = picker.endDate;
-
-        // Bloquer la sélection de lundi et dimanche comme premier et dernier jour
-        if (startDate.day() === 0 || startDate.day() === 1) {
-            alert("Veuillez sélectionner un autre jour que lundi ou dimanche comme premier jour.");
-            return false;
-        }
-
-        if (endDate.day() === 0 || endDate.day() === 1) {
-            alert("Veuillez sélectionner un autre jour que lundi ou dimanche comme dernier jour.");
-            return false;
-        }
-
-        var bikeId = 1;
-        var selectedDates = bookingDates[bikeId];
-        if (!selectedDates) {
-            return;
-        }
-
-        // bloquer la selection si elle est couper par des date reserver
-        if (selectedDates) {
-        for (var i = 0; i < selectedDates.length; i++) {
-            var reservedStartDate = moment(selectedDates[i].start);
-            var reservedEndDate = moment(selectedDates[i].end);
-
-            if (
-                (reservedStartDate.isAfter(startDate, 'day') && reservedStartDate.isBefore(endDate, 'day')) ||
-                (reservedEndDate.isAfter(startDate, 'day') && reservedEndDate.isBefore(endDate, 'day')) ||
-                (reservedStartDate.isSame(startDate, 'day') && reservedEndDate.isSame(endDate, 'day'))
-            ) {
-                alert('Des dates réservées se trouvent entre le premier jour et le dernier jour sélectionnés.');
                 return;
             }
-        }
-    }
-        $('input[name="date_debut"]').val(startDate.format('YYYY-MM-DD'));
-        $('input[name="date_fin"]').val(endDate.format('YYYY-MM-DD'));
 
-        
-       
+            // bloquer la selection si elle est couper par des date reserver
+            if (selectedDates) {
+                for (var i = 0; i < selectedDates.length; i++) {
+                    var reservedStartDate = moment(selectedDates[i].start);
+                    var reservedEndDate = moment(selectedDates[i].end);
+
+                    if (
+                        (reservedStartDate.isAfter(startDate, 'day') && reservedStartDate.isBefore(endDate, 'day')) ||
+                        (reservedEndDate.isAfter(startDate, 'day') && reservedEndDate.isBefore(endDate, 'day')) ||
+                        (reservedStartDate.isSame(startDate, 'day') && reservedEndDate.isSame(endDate, 'day'))
+                    ) {
+                        alert('Des dates réservées se trouvent entre le premier jour et le dernier jour sélectionnés.');
+                        return;
+                    }
+                }
+            }
+            $('input[name="date_debut"]').val(startDate.format('YYYY-MM-DD'));
+            $('input[name="date_fin"]').val(endDate.format('YYYY-MM-DD'));
+
+
+
+        });
     });
-});
-
 </script>
 <div class="container  mb-5">
-    <h1 class="title mb-5 mt-5">Formulair de location de vélos</h1>
+    <h1 class="title mb-5 mt-5">Formulaire de location de vélos</h1>
     <div class="row  cadre">
         <div class="col-lg-12 p-3  ">
             <form action="../controllers/location.php" method="post">
@@ -135,21 +134,31 @@ if (isset($_SESSION['sucess'])) {
                 <div>
                     <label for="bike">Nombres de vélo :</label>
                     <select id="bike" name="bike">
-                        
+
                         <?php foreach ($bikes as $bike) { ?>
-                            <option value="<?php echo $bike['id']; ?>"><?php echo $bike['bike_name']; ?></option>
-                        <?php } ?>
+
+                            <?php
+                            $bikeQuantity = $bike['bike_quantity'];
+                            for ($i = 1; $i <= $bikeQuantity; $i++) { ?>
+                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php } ?>
                     </select>
                 </div>
+            <?php } ?>
+            </select>
 
-                <div>
-                <label >Date de début et de fin</label>
-                    <input type="text" id="daterange" name="daterange" value="" class="form-control button">
-                </div>
+
+            <div>
+                <label>Date de début et de fin</label>
+                <input type="text" id="daterange" name="daterange" value="" class="form-control button">
+            </div>
+            <div>
                 <button class="btn btn-outline-dark button" type="submit">Envoyer</button>
+            </div>
             </form>
         </div>
     </div>
+</div>
 </div>
 <?php $content = ob_get_clean(); ?>
 

@@ -1,7 +1,7 @@
 <?php
 require_once('../model/nav.php');
 $gammes = gammeProduct();
-$services = service();
+$services = serviceNav();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +63,7 @@ $services = service();
                         </a>
                         <ul class="dropdown-menu">
                             <?php foreach ($services as $service) { ?>
-                                <li><a class="dropdown-item" href="index.php?action=service&id=<?= $service['id'] ?>"><?php echo $service['name']; ?></a></li>
+                                <li><a class="dropdown-item" href="index.php?action=services&id=<?= $service['id'] ?>"><?php echo $service['name']; ?></a></li>
                             <?php } ?>
                         </ul>
                     </li>
@@ -71,7 +71,7 @@ $services = service();
                         <a class="nav-link" href="index.php?action=news">Actualités</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?action=location">Location de vélos</a>
+                        <a class="nav-link" href="index.php?action=bike">Location de vélos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="index.php?action=contact">Contactez-nous</a>

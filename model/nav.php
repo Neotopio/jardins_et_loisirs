@@ -1,7 +1,7 @@
 <?php
 require_once('../backoffice/database.php');
 
-function service()
+function serviceNav()
 {
     $db = dbconnect();
     $sql = 'SELECT * FROM `services`  ';

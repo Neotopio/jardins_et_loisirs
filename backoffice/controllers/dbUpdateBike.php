@@ -14,11 +14,11 @@ if ((isset($_POST['type']) && !empty($_POST['type']))
         $picture = adPhoto();
         dbUpdateBike($picture);
         unlink('../'.$_POST['chemin']);
-       // header('location:../public/index.php?page=bike');
+        header('location:../public/index.php?page=bike');
     } else {
         $picture = $_POST['chemin'];
         dbUpdateBike($picture);
-       // header('location:../public/index.php?page=bike');
+        header('location:../public/index.php?page=bike');
     }
 } else {
     header('location:../public/index.php?page=updateBike&id=' . $_POST['id']);

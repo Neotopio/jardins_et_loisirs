@@ -23,7 +23,7 @@
                         <tr>
                             <td><?= $gammeProduct['name'] ?></td>
                             <td><?= wordwrap($gammeProduct['description'], 50, "<br>", true) ?></td>
-                            <td><img src="<?= $gammeProduct['picture'] ?>" alt="" style="max-width: 400px; max-height: 200px;"></td>
+                            <td><img src="../<?= $gammeProduct['picture'] ?>" alt="" style="max-width: 400px; max-height: 200px;"></td>
                             <td><?php if ($gammeProduct['is_enable'] == 1) {
                                     echo 'oui';
                                 } else {

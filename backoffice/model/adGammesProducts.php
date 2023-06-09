@@ -15,7 +15,7 @@ function adPhoto()
         if (in_array($extension, $allowedExtensions)) {
 
             move_uploaded_file($_FILES['pictures']['tmp_name'], '../uploads/' . basename($_FILES['pictures']['name']));
-            $screenshot = '../uploads/' . basename($_FILES['pictures']['name']);
+            $screenshot = 'uploads/' . basename($_FILES['pictures']['name']);
         } else {
             echo 'Le format du fichier n\'est pas autorisé. Merci de n\'envoyer que des fichiers .jpg, .jpeg, .png ou .gif';
 

@@ -23,7 +23,7 @@
                         <tr>
                             <td><?= $new['name'] ?></td>
                             <td><?= wordwrap($new['description'], 50, "<br>", true) ?></td>
-                            <td><img src="<?= $new['picture'] ?>" alt=""style="max-width: 400px; max-height: 200px;" ></td>
+                            <td><img src="../<?= $new['picture'] ?>" alt=""style="max-width: 400px; max-height: 200px;" ></td>
                             <td><?php if ($new['is_enable']==1){
                                 echo 'oui'; }
                                 else {

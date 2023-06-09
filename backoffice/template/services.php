@@ -38,7 +38,7 @@
                             <td class="action">
                                 <form action="../model/deleteServices.php" method="POST">
                                     <input type="hidden" name='id' value="<?php echo $service['id']; ?>">
-                                    <input type="hidden" name='chemin' value="<?php echo $service['picture']; ?>">
+                                    <input type="hidden" name='chemin' value="../<?php echo $service['picture']; ?>">
                                     <button class="btn btn-danger" type="submit" onclick="return(confirm('Voulez-vous supprimer cette entrée ?'));"> Supprimer</button>
                                 </form>
                             </td>
