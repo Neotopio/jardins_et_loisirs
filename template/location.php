@@ -26,7 +26,6 @@ if (isset($_SESSION['sucess'])) {
                 end: '2023-06-30'
             }
         ],
-        // ...
     };
     $(function() {
         // Initialiser le date range picker
@@ -62,35 +61,29 @@ if (isset($_SESSION['sucess'])) {
                 return false;
             },
         });
-
         // Ajouter l'événement apply.daterangepicker
         $('#daterange').on('apply.daterangepicker', function(ev, picker) {
             var startDate = picker.startDate;
             var endDate = picker.endDate;
-
             // Bloquer la sélection de lundi et dimanche comme premier et dernier jour
             if (startDate.day() === 0 || startDate.day() === 1) {
                 alert("Veuillez sélectionner un autre jour que lundi ou dimanche comme premier jour.");
                 return false;
             }
-
             if (endDate.day() === 0 || endDate.day() === 1) {
                 alert("Veuillez sélectionner un autre jour que lundi ou dimanche comme dernier jour.");
                 return false;
             }
-
             var bikeId = 1;
             var selectedDates = bookingDates[bikeId];
             if (!selectedDates) {
                 return;
             }
-
             // bloquer la selection si elle est couper par des date reserver
             if (selectedDates) {
                 for (var i = 0; i < selectedDates.length; i++) {
                     var reservedStartDate = moment(selectedDates[i].start);
                     var reservedEndDate = moment(selectedDates[i].end);
-
                     if (
                         (reservedStartDate.isAfter(startDate, 'day') && reservedStartDate.isBefore(endDate, 'day')) ||
                         (reservedEndDate.isAfter(startDate, 'day') && reservedEndDate.isBefore(endDate, 'day')) ||
@@ -103,9 +96,6 @@ if (isset($_SESSION['sucess'])) {
             }
             $('input[name="date_debut"]').val(startDate.format('YYYY-MM-DD'));
             $('input[name="date_fin"]').val(endDate.format('YYYY-MM-DD'));
-
-
-
         });
     });
 </script>
@@ -114,7 +104,6 @@ if (isset($_SESSION['sucess'])) {
     <div class="row  cadre">
         <div class="col-lg-12 p-3  ">
             <form action="../controllers/location.php" method="post">
-
                 <div>
                     <label for="exampleFormControlInput1" class="form-label">Nom</label>
                     <input type="text" class="form-control button " placeholder="" aria-label="Last name" name="last_name" required>
@@ -132,11 +121,9 @@ if (isset($_SESSION['sucess'])) {
                     <input type="email" class="form-control button" placeholder="name@example.com" name="mail" required>
                 </div>
                 <div>
-                    <label for="bike">Nombres de vélo :</label>
-                    <select id="bike" name="bike">
-
+                    <label for="bike_count">Nombres de vélo :</label>
+                    <select id="bike_count" name="bike">
                         <?php foreach ($bikes as $bike) { ?>
-
                             <?php
                             $bikeQuantity = $bike['bike_quantity'];
                             for ($i = 1; $i <= $bikeQuantity; $i++) { ?>
@@ -146,8 +133,6 @@ if (isset($_SESSION['sucess'])) {
                 </div>
             <?php } ?>
             </select>
-
-
             <div>
                 <label>Date de début et de fin</label>
                 <input type="text" id="daterange" name="daterange" value="" class="form-control button">
@@ -161,5 +146,4 @@ if (isset($_SESSION['sucess'])) {
 </div>
 </div>
 <?php $content = ob_get_clean(); ?>
-
 <?php require('layout.php') ?>

@@ -5,10 +5,10 @@ function news()
 {
     
     $db = dbconnect();
-    $sql = 'SELECT * FROM `services` ORDER BY DESC ';
+    $sql = 'SELECT * FROM `news` ORDER BY id DESC ';
     $query = $db->prepare($sql);
     
     $query->execute();
-    $services = $query->fetchAll(PDO::FETCH_ASSOC);
-    return $services;
+    $news = $query->fetchAll(PDO::FETCH_ASSOC);
+    return $news;
 }
