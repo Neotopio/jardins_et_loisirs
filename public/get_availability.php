@@ -2,7 +2,6 @@
 require_once('../backoffice/database.php');
 $numberOfBikes = $_POST['number_of_bikes'];
 $db = dbconnect();
-
 $sql = "SELECT DISTINCT start_date, end_date
           FROM reservations
           WHERE (
@@ -21,8 +20,6 @@ $query->bindValue(':numberOfBikes', $numberOfBikes, PDO::PARAM_INT);
 $query->execute();
 $unavailableDates = $query->fetchAll(PDO::FETCH_ASSOC);
 
-
-
 $unavailableDatesFormatted = array_map(function ($row) {
     return array(
         'start' => $row['start_date'],
@@ -36,5 +33,4 @@ $response = array(
 );
 
 
-header('Content-Type: application/json');
 echo json_encode($response);

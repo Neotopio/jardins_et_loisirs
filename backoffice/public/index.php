@@ -63,7 +63,7 @@ if (isset($_GET['page'])) {
     } elseif ($page == 'updateCarousel') {
         require_once('../controllers/carousel.php');
         vueUpdateCarousel($_GET['id']);
-    }elseif ($page == 'bike') {
+    } elseif ($page == 'bike') {
         require_once('../controllers/bike.php');
         vueBike();
     } elseif ($page == 'adBike') {
@@ -72,8 +72,15 @@ if (isset($_GET['page'])) {
     } elseif ($page == 'updateBike') {
         require_once('../controllers/bike.php');
         vueUpdateBike($_GET['id']);
-    }
-    elseif ($page == 'location') {;
+    } elseif ($page == 'admin') {
+        require_once('../controllers/admin.php');
+        vueAdmin();
+    } elseif ($page == 'updateAdmin') {
+        require_once('../controllers/admin.php');
+        vueUpdateAdmin($_GET['id']);
+    } elseif ($page == 'location') {
+        require_once('../controllers/locations.php');
+        vueLocation();
     } else {
         require_once('../controllers/homePage.php');
         homePage();

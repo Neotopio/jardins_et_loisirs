@@ -34,7 +34,7 @@
                     <a href="index.php?page=products" class="nav_link"> <i class='bx bxs-shopping-bags nav_icon'></i> <span class="nav_name">Produits</span> </a>
                     <a href="index.php?page=bike" class="nav_link"> <i class="bi bi-bicycle"></i> <span class="nav_name">Vélos</span> </a>
                     <a href="index.php?page=location" class="nav_link"> <i class="bi bi-calendar3"></i> <span class="nav_name">Location</span> </a>
-                    <a href="../template/adAdmin.php" class="nav_link"> <i class="bi bi-people"></i> <span class="nav_name">Gestion admin</span> </a>
+                    <a href="index.php?page=admin" class="nav_link"> <i class="bi bi-people"></i> <span class="nav_name">Gestion admin</span> </a>
                 </div>
             </div>
             <a href="../model/adminLogout.php" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
@@ -84,7 +84,7 @@
             }
             linkColor.forEach(l => l.addEventListener('click', colorLink))
 
-            // Your code to run since DOM is loaded and ready
+           
         });
     </script>
 </body>

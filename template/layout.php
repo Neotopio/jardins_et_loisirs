@@ -5,7 +5,6 @@ $services = serviceNav();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +23,6 @@ $services = serviceNav();
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <title><?= $title ?></title>
 </head>
-
 <body>
     <header class="text-center mb-5">
         <div class="container">
@@ -33,8 +31,6 @@ $services = serviceNav();
             </a>
         </div>
     </header>
-
-
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="#"></a>
@@ -46,7 +42,6 @@ $services = serviceNav();
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="index.php?action=home">Acceuil</a>
                     </li>
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Nos gammes produits
@@ -81,34 +76,20 @@ $services = serviceNav();
             </div>
         </div>
     </nav>
-
     <main>
-
         <?= $content ?>
-
     </main>
-
     <footer>
         <container class="fluid">
             <div class="row">
                 <div class="col text-center">
                     <a href="https://www.facebook.com/Jardins.et.Loisirs.Volmunster57/"><img src="../backoffice/picture/f_logo_RGB-Blue_1024.png" alt="logo facebook" width="48" height="48"> </a>
-
                     <a href="https://www.instagram.com/jardinsetloisirs_57/"><img src="../backoffice/picture/instagram-ig-circle-logo.png" alt="logo instagram" width="48" height="48"> </a>
-
                     <a href="https://www.linkedin.com/company/jardins-et-loisirs57/"><img src="../backoffice/picture/pngimg.com - linkedIn_PNG38.png" alt="logo linkedin" width="48" height="48"> </a>
                 </div>
             </div>
         </container>
     </footer>
-
-
-
-
-
-
-
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-
 </html>

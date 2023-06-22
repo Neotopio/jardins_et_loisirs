@@ -5,7 +5,9 @@ if (isset($_SESSION['sucess'])) {
 } elseif (isset($_SESSION['error'])) {
     echo "<div class='alert alert-warning'>" . $_SESSION['error'] . "</div>";
     unset($_SESSION['error']);
-} ?>
+} 
+
+?>
 <script>
     var bookingDates = {
         1: [{
@@ -61,7 +63,6 @@ if (isset($_SESSION['sucess'])) {
                 return false;
             },
         });
-        // Ajouter l'événement apply.daterangepicker
         $('#daterange').on('apply.daterangepicker', function(ev, picker) {
             var startDate = picker.startDate;
             var endDate = picker.endDate;
@@ -103,7 +104,7 @@ if (isset($_SESSION['sucess'])) {
     <h1 class="title mb-5 mt-5">Formulaire de location de vélos</h1>
     <div class="row  cadre">
         <div class="col-lg-12 p-3  ">
-            <form action="../controllers/location.php" method="post">
+            <form action="../controllers/reservations.php" method="post">
                 <div>
                     <label for="exampleFormControlInput1" class="form-label">Nom</label>
                     <input type="text" class="form-control button " placeholder="" aria-label="Last name" name="last_name" required>
@@ -120,6 +121,9 @@ if (isset($_SESSION['sucess'])) {
                     <label for="exampleFormControlInput1" class="form-label">Adresse Email</label>
                     <input type="email" class="form-control button" placeholder="name@example.com" name="mail" required>
                 </div>
+                <input type="hidden" name="id_bike" value="<?php echo $_GET['id']; ?>">
+                <input type="hidden" name="date_debut">
+                <input type="hidden" name="date_fin">
                 <div>
                     <label for="bike_count">Nombres de vélo :</label>
                     <select id="bike_count" name="bike">
@@ -135,7 +139,7 @@ if (isset($_SESSION['sucess'])) {
             </select>
             <div>
                 <label>Date de début et de fin</label>
-                <input type="text" id="daterange" name="daterange" value="" class="form-control button">
+                <input type="text" id="daterange" name="date_debut_fin" value="" class="form-control button">
             </div>
             <div>
                 <button class="btn btn-outline-dark button" type="submit">Envoyer</button>
