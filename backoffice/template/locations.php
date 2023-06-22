@@ -31,20 +31,19 @@
                             <td><?= $location['customer_email'] ?></td>
                             <td><?= $location['customer_phone'] ?></td>
                             <td><?= $location['quantity'] ?></td>
-                            <td><?= $location['date_start'] ?></td>
-                            <td><?= $location['date_end'] ?></td>
+                            <td><?= date('d/m/Y', strtotime($location['date_start'])) ?></td>
+                            <td><?= date('d/m/Y', strtotime($location['date_end'])) ?></td>
 
                             <td class="action">
-                                      
-                                       <form action="../model/validateLocations.php" method="POST">
-                                        <input type="hidden" value="<? $location['id_validate']?>">
-                                       <button class="btn btn-primary" type="submit"> Valider</button> </form>
-                            
-                                     </td>
+
+                                <form action="../model/validateLocations.php" method="POST">
+                                    <input type="hidden" value="<? $location['id_validate'] ?>">
+                                    <button class="btn btn-primary" type="submit"> Valider</button>
+                                </form>
+
+                            </td>
                             <td class="action">
-                                <form action="../model/deleteNews.php" method="POST">
-                                
-                                     <button class="btn btn-danger" type="submit" onclick="return(confirm('Voulez-vous supprimer cette entrée ?'));"> Refusé</button> </form>
+                            <a href="index.php?page=deleteLocations"> <button class="btn btn-danger" type="submit"> Refuser</button></a>
                             </td>
                         </tr>
                     <?php
@@ -52,7 +51,7 @@
                     ?>
                 </tbody>
             </table>
-           
+
         </section>
     </div>
 
