@@ -31,6 +31,4 @@ $unavailableDatesFormatted = array_map(function ($row) {
 $response = array(
     'unavailableDates' => $unavailableDatesFormatted
 );
-
-
 echo json_encode($response);

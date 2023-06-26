@@ -33,10 +33,9 @@
                             <td><?= $location['quantity'] ?></td>
                             <td><?= date('d/m/Y', strtotime($location['date_start'])) ?></td>
                             <td><?= date('d/m/Y', strtotime($location['date_end'])) ?></td>
-
                             <td class="action">
 
-                                <form action="../model/validateLocations.php" method="POST">
+                                <form action="../controllers/validateLocations.php" method="POST">
                                     <input type="hidden" value="<? $location['id_validate'] ?>">
                                     <button class="btn btn-primary" type="submit"> Valider</button>
                                 </form>

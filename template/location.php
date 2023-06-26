@@ -5,14 +5,14 @@ if (isset($_SESSION['sucess'])) {
 } elseif (isset($_SESSION['error'])) {
     echo "<div class='alert alert-warning'>" . $_SESSION['error'] . "</div>";
     unset($_SESSION['error']);
-} 
+}
 
 ?>
 <script>
     var bookingDates = {
         1: [{
-                start: '2023-06-10',
-                end: '2023-06-15'
+                start: '2023-07-10',
+                end: '2023-07-15'
             },
             {
                 start: '2023-06-20',
