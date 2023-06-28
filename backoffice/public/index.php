@@ -81,6 +81,12 @@ if (isset($_GET['page'])) {
     } elseif ($page == 'location') {
         require_once('../controllers/locations.php');
         vueLocation();
+    } elseif ($page == 'deleteLocations') {
+        require_once('../controllers/deleteLocations.php');
+        vueDeleteLocations();
+    } elseif ($page == 'reservations') {
+        require_once('../controllers/reservations.php');
+        vueReservations();
     } else {
         require_once('../controllers/homePage.php');
         homePage();

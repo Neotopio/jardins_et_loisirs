@@ -5,19 +5,20 @@ require_once('../model/secure.php');
 
 function reservations($id)
 {
-    $id=secureInput($id);
+    $id = secureInput($id);
     $db = dbconnect();
     $sql = 'SELECT * FROM `validate` WHERE id_validate=:id ';
     $query = $db->prepare($sql);
     $query->bindValue(':id', $id, PDO::PARAM_INT);
     $query->execute();
     $validates = $query->fetchAll(PDO::FETCH_ASSOC);
+
     foreach ($validates as $validate) {
         $bike_id = $validate['id_bike'];
-        $start_date = $validate['date_satrt'];
+        $start_date = $validate['date_start'];
         $end_date = $validate['date_end'];
         $customer_name = $validate['customer_name'];
-        $customer_last_name = $validate['custopmer_last_name'];
+        $customer_last_name = $validate['customer_last_name'];
         $customer_phone = $validate['customer_phone'];
         $customer_email = $validate['customer_email'];
         $quantity = $validate['quantity'];
@@ -36,23 +37,23 @@ function reservations($id)
     $req->bindValue(':quantity', $quantity, PDO::PARAM_INT);
     $req->execute();
 
-    $query = 'DELETE FROM `validate` WHERE id=:id';
+    $query = 'DELETE FROM `validate` WHERE id_validate=:id';
     $req = $db->prepare($query);
     $req->bindValue(':id', $id, PDO::PARAM_INT);
     $req->execute();
 
-  
+
     $sujet = 'Confirmation de réservation ';
     $corp = "
    
   
      
   
-     Message :"'Bonjour ' . $customer_name . " " . $customer_last_name . "
+    Bonjour " . $customer_name . " " . $customer_last_name . "
      
       Votre demande a était validée 
    
     ";
- 
+
     mail($customer_email, $sujet, $corp);
 }
