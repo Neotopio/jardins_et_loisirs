@@ -98,8 +98,7 @@ if (isset($_SESSION['sucess'])) {
                     // Réappliquer la sélection de dates pour mettre à jour l'affichage
                     $('#daterange').data('daterangepicker').setStartDate(startDate);
                     $('#daterange').data('daterangepicker').setEndDate(endDate);
-                    $('input[name="date_debut"]').val(startDate.format('YYYY-MM-DD'));
-                    $('input[name="date_fin"]').val(endDate.format('YYYY-MM-DD'));
+                  
                 },
                 error: function() {
                     // Gérer les erreurs de la requête AJAX
