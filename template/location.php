@@ -9,26 +9,6 @@ if (isset($_SESSION['sucess'])) {
 
 ?>
 <script>
-    var bookingDates = {
-        1: [{
-                start: '2023-07-10',
-                end: '2023-07-15'
-            },
-            {
-                start: '2023-06-20',
-                end: '2023-06-25'
-            }
-        ],
-        2: [{
-                start: '2023-06-12',
-                end: '2023-06-18'
-            },
-            {
-                start: '2023-06-25',
-                end: '2023-06-30'
-            }
-        ],
-    };
     $(function() {
         // Initialiser le date range picker
         $('#daterange').daterangepicker({
@@ -47,57 +27,88 @@ if (isset($_SESSION['sucess'])) {
                 monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
                 firstDay: 1
             },
-            isInvalidDate: function(date) {
-                var bikeId = 1;
-                var selectedDates = bookingDates[bikeId];
-                if (!selectedDates) {
-                    return false;
-                }
-                for (var i = 0; i < selectedDates.length; i++) {
-                    var startDate = moment(selectedDates[i].start);
-                    var endDate = moment(selectedDates[i].end);
-                    if (date.isSameOrAfter(startDate) && date.isSameOrBefore(endDate)) {
-                        return true; // Date déjà prise, invalide
-                    }
-                }
-                return false;
-            },
         });
+
+
+
+        // Fonction pour obtenir toutes les dates comprises entre la date de début et la date de fin
+        function getSelectedDates(startDate, endDate) {
+            var dates = [];
+            var currentDate = startDate.clone();
+            while (currentDate <= endDate) {
+                dates.push(currentDate.format('YYYY-MM-DD'));
+                currentDate.add(1, 'day');
+            }
+            return dates;
+        }
+
         $('#daterange').on('apply.daterangepicker', function(ev, picker) {
             var startDate = picker.startDate;
             var endDate = picker.endDate;
+
             // Bloquer la sélection de lundi et dimanche comme premier et dernier jour
             if (startDate.day() === 0 || startDate.day() === 1) {
                 alert("Veuillez sélectionner un autre jour que lundi ou dimanche comme premier jour.");
                 return false;
             }
+
             if (endDate.day() === 0 || endDate.day() === 1) {
                 alert("Veuillez sélectionner un autre jour que lundi ou dimanche comme dernier jour.");
                 return false;
             }
-            var bikeId = 1;
-            var selectedDates = bookingDates[bikeId];
-            if (!selectedDates) {
-                return;
-            }
-            // bloquer la selection si elle est couper par des date reserver
-            if (selectedDates) {
-                for (var i = 0; i < selectedDates.length; i++) {
-                    var reservedStartDate = moment(selectedDates[i].start);
-                    var reservedEndDate = moment(selectedDates[i].end);
-                    if (
-                        (reservedStartDate.isAfter(startDate, 'day') && reservedStartDate.isBefore(endDate, 'day')) ||
-                        (reservedEndDate.isAfter(startDate, 'day') && reservedEndDate.isBefore(endDate, 'day')) ||
-                        (reservedStartDate.isSame(startDate, 'day') && reservedEndDate.isSame(endDate, 'day'))
-                    ) {
-                        alert('Des dates réservées se trouvent entre le premier jour et le dernier jour sélectionnés.');
-                        return;
-                    }
-                }
-            }
             $('input[name="date_debut"]').val(startDate.format('YYYY-MM-DD'));
             $('input[name="date_fin"]').val(endDate.format('YYYY-MM-DD'));
+            var bikeId = <?php echo $_GET['id']; ?>;
+            var selectedBikeCount = $('select[name="bike"]').val();
         });
+
+        $('select[name="bike"]').on('change', function() {
+            var selectedBikeCount = $(this).val();
+            var startDate = $('#daterange').data('daterangepicker').startDate;
+            var endDate = $('#daterange').data('daterangepicker').endDate;
+
+            // Effectuer la demande Ajax pour vérifier les disponibilités
+            $.ajax({
+                url: 'get_availability.php',
+                method: 'GET',
+                data: {
+                    id: <?php echo $_GET['id']; ?>,
+                    numberOfBikes: selectedBikeCount,
+                },
+                success: function(response) {
+                    var unavailableDates = JSON.parse(response);
+                    unavailableDates = unavailableDates.unavailableDates;
+                  
+
+                    // Mettre à jour les options du DateRangePicker avec les nouvelles dates indisponibles
+                    $('#daterange').data('daterangepicker').isInvalidDate = function(date) {
+                        for (var i = 0; i < unavailableDates.length; i++) {
+                            var startDate = moment(unavailableDates[i].start, 'YYYY-MM-DD HH:mm:ss');
+                            var endDate = moment(unavailableDates[i].end, 'YYYY-MM-DD HH:mm:ss');
+
+                            if (date.isBetween(startDate, endDate, null, '[]')) {
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    };
+
+
+                    // Réappliquer la sélection de dates pour mettre à jour l'affichage
+                    $('#daterange').data('daterangepicker').setStartDate(startDate);
+                    $('#daterange').data('daterangepicker').setEndDate(endDate);
+                    $('input[name="date_debut"]').val(startDate.format('YYYY-MM-DD'));
+                    $('input[name="date_fin"]').val(endDate.format('YYYY-MM-DD'));
+                },
+                error: function() {
+                    // Gérer les erreurs de la requête AJAX
+                    alert("Une erreur s'est produite lors de la récupération des disponibilités.");
+                }
+            });
+        });
+
+
     });
 </script>
 <div class="container  mb-5">
@@ -127,6 +138,7 @@ if (isset($_SESSION['sucess'])) {
                 <div>
                     <label for="bike_count">Nombres de vélo :</label>
                     <select id="bike_count" name="bike">
+                        <option value="0">0</option>
                         <?php foreach ($bikes as $bike) { ?>
                             <?php
                             $bikeQuantity = $bike['bike_quantity'];

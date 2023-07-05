@@ -1,24 +1,26 @@
 <?php
+
 require_once('../backoffice/database.php');
-$numberOfBikes = $_POST['number_of_bikes'];
+
+
+$numberOfBikes = intval($_GET['numberOfBikes']);
+$id = intval($_GET['id']);
+
 $db = dbconnect();
-$sql = "SELECT DISTINCT start_date, end_date
-          FROM reservations
-          WHERE (
-              :numberOfBikes > (
-                  SELECT (SUM(quantity) + :numberOfBikes)
-                  FROM reservations AS r2
-                  WHERE (
-                      (r2.start_date <= reservations.start_date AND r2.end_date >= reservations.start_date)
-                      OR (r2.start_date <= reservations.end_date AND r2.end_date >= reservations.end_date)
-                      OR (r2.start_date >= reservations.start_date AND r2.end_date <= reservations.end_date)
-                  )
-              )
-          )";
+$sql = "SELECT r.start_date, r.end_date
+FROM reservations as r
+JOIN bikes as b ON b.id = r.bike_id
+WHERE r.bike_id = :id
+AND (b.bike_quantity - r.quantity) < :numberOfBikes";
+
+
 $query = $db->prepare($sql);
 $query->bindValue(':numberOfBikes', $numberOfBikes, PDO::PARAM_INT);
+$query->bindValue(':id', $id, PDO::PARAM_INT);
 $query->execute();
 $unavailableDates = $query->fetchAll(PDO::FETCH_ASSOC);
+
+
 
 $unavailableDatesFormatted = array_map(function ($row) {
     return array(
@@ -26,7 +28,6 @@ $unavailableDatesFormatted = array_map(function ($row) {
         'end' => $row['end_date']
     );
 }, $unavailableDates);
-
 
 $response = array(
     'unavailableDates' => $unavailableDatesFormatted
