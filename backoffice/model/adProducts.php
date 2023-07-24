@@ -32,11 +32,9 @@ function adProduct()
     $req->bindValue(':reference', $ref, PDO::PARAM_STR);
     $req->execute();
 }
-
 function adPicturesProducts()
 {
     $files = reArrayImages($_FILES['pictures']);
-
     $db = dbconnect();
     foreach ($files as $file) {
         if ($file['size'] <= 1000000) {
@@ -44,23 +42,15 @@ function adPicturesProducts()
             $extension = $fileInfo['extension'];
             $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
             if (in_array($extension, $allowedExtensions)) {
-
                 move_uploaded_file($file['tmp_name'], '../uploads/' . basename($file['name']));
                 $screenshot = 'uploads/' . basename($file['name']);
-
                 $query = 'INSERT INTO picture (path,name_picture) VALUES (:path,:nom)';
                 $pic = $db->prepare($query);
-
                 $pic->bindValue(':path', $screenshot, PDO::PARAM_STR);
                 $pic->bindValue(':nom', basename($file['name']), PDO::PARAM_STR);
                 $pic->execute();
-
-
-
                 $idProducts = getLastIdProducts();
                 $idPictures = getLastIdPicture();
-
-
                 $insert = 'INSERT INTO illustrate (id_product,id_picture) VALUES (:id_products,:id_pictures)';
                 $pro = $db->prepare($insert);
                 $pro->bindValue(':id_products', $idProducts, PDO::PARAM_INT);
@@ -68,7 +58,6 @@ function adPicturesProducts()
                 $pro->execute();
             } else {
                 echo 'Le format du fichier n\'est pas autorisé. Merci de n\'envoyer que des fichiers .jpg, .jpeg, .png ou .gif';
-
                 exit;
             }
         } else {

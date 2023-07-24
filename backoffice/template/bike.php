@@ -6,26 +6,23 @@
             <h1>Liste des vélos</h1>
             <table class="table">
                 <thead>
-
                     <th>Type</th>
                     <th>descriptions</th>
                     <th>Prix</th>
                     <th>Quantitées</th>
                     <th>Photos</th>
                     <th>Active</th>
-
                 </thead>
                 <tbody>
                     <div class="ajouter">
                         <a href="index.php?page=adBike"> <button class="btn btn-primary" type="submit"> Ajouter</button></a>
                     </div>
                     <?php
-
                     foreach ($bikes as $bike) {
                     ?>
                         <tr>
                             <td><?= $bike['bike_type'] ?></td>
-                            <td><?= wordwrap($bike['bike_description'], 50, "<br>", true) ?></td>
+                            <td><?= wordwrap($bike['bike_description'], 70, "<br>", true) ?></td>
                             <td><?= $bike['bike_price'] ?></td>
                             <td><?= $bike['bike_quantity'] ?></td>
                             <td><img src="../<?= $bike['bike_image'] ?>" alt="" style="max-width: 400px; max-height: 200px;"></td>
@@ -35,7 +32,6 @@
                                     echo 'non';
                                 }
                                 ?></td>
-
                             <td class="action">
                                 <a href="index.php?page=updateBike&id=<?php echo $bike['id'] ?>"> <button class="btn btn-primary" type="submit"> Modifier</button></a>
                             </td>

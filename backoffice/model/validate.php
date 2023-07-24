@@ -1,12 +1,13 @@
 <?php
 session_start();
 require_once('../database.php');
+require_once('../model/secure.php');
 
 $db = dbconnect();
 
 
-$username = ($_POST["nom"]);
-$password = ($_POST["password"]);
+$username = secureInput($_POST["nom"]);
+$password = secureInput($_POST["password"]);
 $stmt = $db->prepare('SELECT * FROM admin WHERE name = :nom');
 $stmt->bindValue(":nom", $username, PDO::PARAM_STR);
 $stmt->execute();
