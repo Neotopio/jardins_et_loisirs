@@ -9,7 +9,8 @@ if (isset($_SESSION['sucess'])) {
 
 ?>
 <script>
-  $(function() {
+
+$(function() {
     // Initialiser le date range picker
     $('#daterange').daterangepicker({
         minDate: new Date(),
@@ -29,8 +30,7 @@ if (isset($_SESSION['sucess'])) {
         },
     });
 
-    var selectedStartDate;
-    var selectedEndDate;
+
 
     // Fonction pour obtenir toutes les dates comprises entre la date de début et la date de fin
     function getSelectedDates(startDate, endDate) {
@@ -44,27 +44,32 @@ if (isset($_SESSION['sucess'])) {
     }
 
     $('#daterange').on('apply.daterangepicker', function(ev, picker) {
-        selectedStartDate = picker.startDate;
-        selectedEndDate = picker.endDate;
+        var startDate = picker.startDate;
+        var endDate = picker.endDate;
 
         // Bloquer la sélection de lundi et dimanche comme premier et dernier jour
-        if (selectedStartDate.day() === 0 || selectedStartDate.day() === 1) {
+        if (startDate.day() === 0 || startDate.day() === 1) {
             alert("Veuillez sélectionner un autre jour que lundi ou dimanche comme premier jour.");
             return false;
         }
 
-        if (selectedEndDate.day() === 0 ) {
-            alert("Veuillez sélectionner un autre jour que dimanche comme dernier jour.");
+        if (endDate.day() === 0 || endDate.day() === 1) {
+            alert("Veuillez sélectionner un autre jour que lundi ou dimanche comme dernier jour.");
             return false;
         }
+
+        var bikeId = <?php echo $_GET['id']; ?>;
+        var selectedBikeCount = $('select[name="bike"]').val();
     });
 
     $('select[name="bike"]').on('change', function() {
         var selectedBikeCount = $(this).val();
+        var startDate = $('#daterange').data('daterangepicker').startDate;
+        var endDate = $('#daterange').data('daterangepicker').endDate;
 
         // Effectuer la demande Ajax pour vérifier les disponibilités
         $.ajax({
-            url: 'get_availability.php',
+            url: '../model/get_availability.php',
             method: 'GET',
             data: {
                 id: <?php echo $_GET['id']; ?>,
@@ -73,6 +78,7 @@ if (isset($_SESSION['sucess'])) {
             success: function(response) {
                 var unavailableDates = JSON.parse(response);
                 unavailableDates = unavailableDates.unavailableDates;
+                console.log(unavailableDates);
 
                 // Mettre à jour les options du DateRangePicker avec les nouvelles dates indisponibles
                 $('#daterange').data('daterangepicker').isInvalidDate = function(date) {
@@ -87,27 +93,12 @@ if (isset($_SESSION['sucess'])) {
 
                     return false;
                 };
-
-                // Vérifier si des dates réservées se trouvent entre le premier jour et le dernier jour sélectionnés
-                if (selectedStartDate && selectedEndDate) {
-                    for (var i = 0; i < unavailableDates.length; i++) {
-                        var reservedStartDate = moment(unavailableDates[i].start, 'YYYY-MM-DD HH:mm:ss');
-                        var reservedEndDate = moment(unavailableDates[i].end, 'YYYY-MM-DD HH:mm:ss');
-
-                        if (
-                            (reservedStartDate.isAfter(selectedStartDate, 'day') && reservedStartDate.isBefore(selectedEndDate, 'day')) ||
-                            (reservedEndDate.isAfter(selectedStartDate, 'day') && reservedEndDate.isBefore(selectedEndDate, 'day')) ||
-                            (reservedStartDate.isSame(selectedStartDate, 'day') && reservedEndDate.isSame(selectedEndDate, 'day'))
-                        ) {
-                            alert('Des dates réservées se trouvent entre le premier jour et le dernier jour sélectionnés.');
-                            return false;
-                        }
-                    }
-                }
+                $('input[name="date_debut"]').val(startDate.format('YYYY-MM-DD'));
+                $('input[name="date_fin"]').val(endDate.format('YYYY-MM-DD'));
 
                 // Réappliquer la sélection de dates pour mettre à jour l'affichage
-                $('#daterange').data('daterangepicker').setStartDate(selectedStartDate);
-                $('#daterange').data('daterangepicker').setEndDate(selectedEndDate);
+                $('#daterange').data('daterangepicker').setStartDate(startDate);
+                $('#daterange').data('daterangepicker').setEndDate(endDate);
             },
             error: function() {
                 // Gérer les erreurs de la requête AJAX
@@ -115,6 +106,8 @@ if (isset($_SESSION['sucess'])) {
             }
         });
     });
+
+
 });
 
 </script>
